@@ -3,9 +3,7 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import { randomUUID } from 'node:crypto';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 
-const transports: Map<string, StreamableHTTPServerTransport> = new Map();
-
-export function registerMcpPostHandler(server: McpServer) {
+export function registerMcpPostHandler(server: McpServer, transports: Map<string, StreamableHTTPServerTransport>) {
     return async (request: Request, response: Response, _next: NextFunction) => {
         const sessionId = request.headers['mcp-session-id'] as string | undefined;
 
