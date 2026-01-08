@@ -18,7 +18,5 @@ export function createApp(server: McpServer) {
         app[definition.method]('/mcp', definition.handler);
     });
 
-    console.log(app);
-
     return app;
 }
