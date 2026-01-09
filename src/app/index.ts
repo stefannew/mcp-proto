@@ -4,6 +4,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 
 import { registerMcpPostHandler } from '../handlers/post.js';
 import { registerMcpGetHandler } from '../handlers/get.js';
+import { registerMcpDeleteHandler } from '../handlers/delete.js';
 
 export function createApp(server: McpServer) {
     const app = createMcpExpressApp();
@@ -17,6 +18,10 @@ export function createApp(server: McpServer) {
         {
             method: 'get',
             handler: registerMcpGetHandler(server, transports)
+        },
+        {
+            method: 'delete',
+            handler: registerMcpDeleteHandler(server, transports)
         }
     ]
 
