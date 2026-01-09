@@ -1,3 +1,41 @@
+
+# Super High Level General Concepts:
+
+`POST /mcp` = call + reply (tool calls)
+`GET /mcp` = server push channel (unsolicited stuff / async notifications)
+
+An `ask` tool call might look like:
+
+`POST /mcp`
+```json
+{
+  "jsonrpc": "2.0",
+  "id": "1",
+  "method": "tools/call",
+  "params": {
+    "name": "ask",
+    "arguments": {
+      "web_sources": true,
+      "foo": "bar"
+    }
+  }
+}
+```
+
+Tools can either respond with a straight "application/json" or a "text/event-stream".
+In the case of our tool call, we'll reply with a "text/event-stream" and we'll stream back
+the SSE messages.
+
+The /ask tool call would return something like a list of { uri, title, chunk } for the sources used to generate
+the answer.
+
+The client would then request the sources used to generate the answer with a request to
+`resources/read`.
+
+Where this doesn't fit is with web sources..., perhaps we can just push these up the SSE stream.
+
+# LifeCycle
+
 1. Client begins by sending an "intialize" request:
 
 <img width="2121" height="1152" alt="mcp-initialize" src="https://github.com/user-attachments/assets/ce1ecd86-b5ca-4cf3-a53d-3ec6a9f0f019" />
